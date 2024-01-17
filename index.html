@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Contract App</title>
+    <script src="https://cdn.ethers.io/lib/ethers-5.0.umd.min.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding: 20px;
+        }
+
+        button {
+            margin: 10px;
+            padding: 10px;
+            font-size: 16px;
+        }
+
+        #result {
+            margin-top: 20px;
+            font-size: 18px;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Smart Contract App</h1>
+
+    <button id="obter-nome-contrato" onclick="obterNomeDoContrato()">Get Contract Name</button>
+    <button id="obter-simbolo-contrato" onclick="obterSimboloDoContrato()">Get Token Symbol</button>
+    <button id="obter-total-fornecimento" onclick="obterTotalDeFornecimento()">Get Token Tottal Supply</button>
+
+    <div id="result"></div>
+
+    <script>
+        // Função global para exibir resultados
+        function exibirResultado(resultado) {
+            document.getElementById("result").innerText = resultado;
+        }
+
+        // Funções de obtenção de dados do contrato
+        async function obterNomeDoContrato() {
+            try {
+                const response = await fetch("/api/nome-do-contrato");
+                const data = await response.json();
+                exibirResultado("Token Contract Name: " + data.nomeDoContrato);
+            } catch (error) {
+                console.error("Erro ao obter o nome do contrato:", error);
+            }
+        }
+
+        async function obterSimboloDoContrato() {
+            try {
+                const response = await fetch("/api/simbolo-do-contrato");
+                const data = await response.json();
+                exibirResultado("Token Symbol: " + data.simboloDoContrato);
+            } catch (error) {
+                console.error("Erro ao obter o símbolo do contrato:", error);
+            }
+        }
+
+        async function obterTotalDeFornecimento() {
+            try {
+                const response = await fetch("/api/total-de-fornecimento-do-contrato");
+                const data = await response.json();
+
+                // Certifique-se de que data.totalDeFornecimento é um objeto BigNumber
+                const totalDeFornecimento = ethers.BigNumber.from(data.totalDeFornecimento);
+
+                // Converta o valor para uma string legível
+                const totalFornecimentoFormatado = ethers.utils.formatUnits(totalDeFornecimento);
+
+                exibirResultado("Tottal Supply: " + totalFornecimentoFormatado);
+            } catch (error) {
+                console.error("Erro ao obter o total de fornecimento do contrato:", error);
+            }
+        }
+    </script>
+</body>
+
+</html>

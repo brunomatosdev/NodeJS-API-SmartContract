@@ -1,0 +1,18 @@
+{
+  "name": "nodejs-api-smartcontract",
+  "version": "1.0.0",
+  "description": "NodeJs Api to Integrate Samrt Contract",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon connect.js",
+    "dev": "nodemon connect.js"
+  },
+  "author": "BrunoMatosDev",
+  "license": "ISC",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.3.1",
+    "ethers": "^5.7.2"
+  }
+}
